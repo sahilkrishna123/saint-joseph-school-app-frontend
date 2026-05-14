@@ -1,122 +1,66 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import "./App.css";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import LeavingCertificate from "./Certificates/LeavingCertificate";
+import ProvisionalCertificate from "./Certificates/ProvisionalCertificate";
+import CharacterCertificate from "./Certificates/CharacterCertificate";
 
-function App() {
-  const [count, setCount] = useState(0)
+import { useEffect, useRef, useState } from "react";
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+import { useReactToPrint } from "react-to-print";
+import Login from "./Pages/Login";
+import Dashboard from "./Pages/Dashboard";
+import Students from "./Components/Students";
+import Classes from "./Components/Classes";
+import PrintCertificatesComponent from "./Components/PrintCertificatesComponent";
 
-      <div className="ticks"></div>
+export default function App() {
+    //   const [student, setStudent] = useState(null);
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+    // IMPORTANT: ref starts as null but will attach later
+    //   const printRef = useRef(null);
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+    //   useEffect(() => {
+    //     api
+    //       .get("/api/v1/students/6a0583e2a7e2da14dce98b7b")
+    //       .then((res) => setStudent(res.data.data.data));
+    //   }, []);
+
+    // ✅ NEW CORRECT API (react-to-print v3+)
+    //   const handlePrint = useReactToPrint({
+    //     contentRef: printRef,
+    //     documentTitle: "Student Certificates",
+    //   });
+
+    //   if (!student) return <h2>Loading...</h2>;
+
+    return (
+        <>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Dashboard />}>
+                        <Route index element={<Navigate to="/students" replace />} />
+                        <Route path="students" element={<Students />} />
+                        <Route path="classes" element={<Classes />} />
+                        <Route path="print-certificates" element={<PrintCertificatesComponent />} />
+                    </Route>
+                </Routes>
+            </BrowserRouter>
+
+        </>
+        // <div style={{ padding: 20 }}>
+        //   <h1>Certificate System</h1>
+
+        //   <h2>
+        //     {student.firstName} {student.lastName}
+        //   </h2>
+
+        //   <button onClick={handlePrint}>Print All Certificates</button>
+
+        //   <div ref={printRef}>
+        //     <LeavingCertificate student={student} />
+        //     <ProvisionalCertificate student={student} />
+        //     <CharacterCertificate student={student} />
+        //   </div>
+        // </div>
+    );
 }
-
-export default App
