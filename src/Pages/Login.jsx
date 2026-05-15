@@ -55,7 +55,7 @@ export default function Login() {
             setErrors({});
 
             const response = await api.post(
-                "/api/v1/users/login", 
+                "/users/login", 
                 {
                     email: formData.email,
                     password: formData.password,
