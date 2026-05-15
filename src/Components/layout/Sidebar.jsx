@@ -14,7 +14,7 @@ const activeStyle = { fontWeight: 'bold', background: '#93c5fd', borderRadius: 4
 export default function Sidebar() {
     const { logout } = useAuth();
     const navigate = useNavigate();
- 
+
     const handleLogout = async () => {
         await logout();
         navigate('/login', { replace: true });
@@ -40,8 +40,11 @@ export default function Sidebar() {
                         </NavLink>
                     </li>
                 ))}
-                 <li className='p-1 mt-10 cursor-pointer bg-red-300 hover:bg-red-400 body-text text-lg rounded text-center'>
-                    <button onClick={handleLogout}>Logout</button>
+                <li
+                    onClick={handleLogout}
+                    className='p-1 mt-10 cursor-pointer bg-red-300 hover:bg-red-400 body-text text-lg rounded text-center'
+                >
+                    Logout
                 </li>
             </ul>
         </nav>
