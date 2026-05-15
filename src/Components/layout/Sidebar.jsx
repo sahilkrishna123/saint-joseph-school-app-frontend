@@ -9,7 +9,7 @@ const links = [
     { to: '/dashboard/print-certificates', label: 'Print Certificates' },
 ];
 
-const activeStyle = { fontWeight: 'bold', background: '#e0e0e0', borderRadius: 4 };
+const activeStyle = { fontWeight: 'bold', background: '#93c5fd', borderRadius: 4 };
 
 export default function Sidebar() {
     const { logout } = useAuth();
@@ -22,10 +22,10 @@ export default function Sidebar() {
 
     return (
         <nav style={{ width: 220, padding: '1rem', borderRight: '1px solid #ddd' }}>
-            <h2>Dashboard</h2>
+            <h2 className='heading text-3xl text-center m-1 mb-5'>Dashboard</h2>
             <ul style={{ listStyle: 'none', padding: 0 }}>
                 {links.map(({ to, label }) => (
-                    <li key={to} style={{ marginBottom: 4 }}>
+                    <li className='body-text text-lg' key={to} style={{ marginBottom: 4 }}>
                         <NavLink
                             to={to}
                             style={({ isActive }) => ({
@@ -40,7 +40,7 @@ export default function Sidebar() {
                         </NavLink>
                     </li>
                 ))}
-                 <li style={{ marginTop: '15rem' }}>
+                 <li className='p-1 mt-10 cursor-pointer bg-red-300 hover:bg-red-400 body-text text-lg rounded text-center'>
                     <button onClick={handleLogout}>Logout</button>
                 </li>
             </ul>

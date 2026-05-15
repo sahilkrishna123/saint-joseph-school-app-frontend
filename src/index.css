@@ -1,5 +1,49 @@
 @import "tailwindcss";
 
-body {
-  /* background-color: rgba(18, 0, 34, 0.911); */
+:root {
+    --color-primary: #243142;
+    --color-secondary: #0f1722;
+
+    --color-button: #FF0A54;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+}
+
+/* Colors */
+.bg-primary {
+    background-color: var(--color-primary);
+}
+
+.bg-secondary {
+    background-color: var(--color-secondary);
+}
+
+.bg-button {
+    background-color: var(--color-button);
+}
+
+.bg-button-secondary {
+    background-color: var(--color-secondary);
+}
+
+/* Hover */
+.hover-bg-secondary:hover {
+    background-color: var(--color-secondary);
+}
+
+.heading {
+    font-family: var(--font-heading);
+    letter-spacing: 0.5px;
+
+}
+
+.body-text {
+    font-family: var(--font-body);
+    letter-spacing: 0.2px;
+
+}
+
+.text-primary {
+    color: rgb(var(--color-primary));
 }

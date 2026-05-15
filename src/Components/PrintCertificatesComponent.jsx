@@ -189,23 +189,23 @@ export default function PrintCertificatesComponent() {
                 {/* Filters */}
                 <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
                     <p className="text-xs font-semibold text-gray-500 uppercase tracking-wider mb-3">Search & Filter Students</p>
-                    <div className="flex flex-wrap gap-3">
+                    <div className="flex flex-wrap gap-3 ">
                         <input type="text" placeholder="Search name or roll no…" value={search} onChange={e => setSearch(e.target.value)}
-                            className="border rounded-lg px-3 py-2 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50" />
+                            className="border border-gray-400 rounded-lg px-3 py-2 text-md flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50" />
                         <select value={filterClass} onChange={e => { setFilterClass(e.target.value); setFilterSection(''); }}
-                            className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50">
+                            className="border border-gray-400 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50">
                             <option value="">All Classes</option>
                             {classes.map(c => <option key={c._id} value={c.name}>{c.name}</option>)}
                         </select>
                         {availableSections.length > 0 && (
                             <select value={filterSection} onChange={e => setFilterSection(e.target.value)}
-                                className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50">
+                                className="border border-gray-400 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50">
                                 <option value="">All Sections</option>
                                 {availableSections.map(sec => <option key={sec} value={sec}>{sec}</option>)}
                             </select>
                         )}
                         <select value={filterGender} onChange={e => setFilterGender(e.target.value)}
-                            className="border rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50">
+                            className="border border-gray-400 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400 bg-gray-50">
                             <option value="">All Genders</option>
                             <option value="Male">Male</option>
                             <option value="Female">Female</option>
@@ -245,8 +245,8 @@ export default function PrintCertificatesComponent() {
                 ) : (
                     <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
                         <div className="overflow-x-auto">
-                            <table className="w-full text-sm">
-                                <thead className="bg-gray-50 border-b border-gray-200">
+                            <table className="w-full text-md">
+                                <thead className="bg-gray-100 border-b border-gray-200">
                                     <tr>
                                         <th className="px-4 py-3 text-left w-10">
                                             <input type="checkbox" checked={allFilteredSelected && filtered.length > 0}

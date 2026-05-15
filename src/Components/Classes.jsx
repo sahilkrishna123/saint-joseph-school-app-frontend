@@ -158,8 +158,8 @@ export default function Classes() {
 
             {/* ── Header ── */}
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">Classes</h1>
-                <span className="text-sm text-gray-500">
+                <h1 className="text-3xl font-bold body-text text-gray-800">Classes</h1>
+                <span className="text-lg text-gray-500">
                     {filtered.length} class{filtered.length !== 1 ? 'es' : ''}
                 </span>
             </div>
@@ -171,12 +171,12 @@ export default function Classes() {
                     placeholder="Search by class name…"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="border rounded px-3 py-2 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-400 rounded px-3 py-2 text-md flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
                 <select
                     value={filterSections}
                     onChange={(e) => setFilterSections(e.target.value)}
-                    className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                     <option value="">All Classes</option>
                     <option value="yes">Has Sections</option>
@@ -220,7 +220,7 @@ export default function Classes() {
                                 </tr>
                             ) : (
                                 filtered.map((c) => (
-                                    <tr key={c._id} className="hover:bg-gray-50 transition-colors">
+                                    <tr key={c._id} className="hover:bg-gray-200 transition-colors">
                                         <td className="px-4 py-3 font-medium text-gray-800">{c.name}</td>
                                         <td className="px-4 py-3">
                                             <span className={`px-2 py-0.5 text-xs rounded-full ${c.hasSections ? 'bg-blue-50 text-blue-600' : 'bg-gray-100 text-gray-500'}`}>

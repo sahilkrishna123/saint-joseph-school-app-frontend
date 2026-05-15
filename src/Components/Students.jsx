@@ -156,8 +156,8 @@ export default function Students() {
 
             {/* ── Header ── */}
             <div className="flex items-center justify-between">
-                <h1 className="text-2xl font-bold text-gray-800">Students</h1>
-                <span className="text-sm text-gray-500">{filtered.length} student{filtered.length !== 1 ? 's' : ''}</span>
+                <h1 className="text-3xl font-bold text-gray-800">Students</h1>
+                <span className="text-xl text-gray-500">{filtered.length} student{filtered.length !== 1 ? 's' : ''}</span>
             </div>
 
             {/* ── Search & Filters ── */}
@@ -167,14 +167,14 @@ export default function Students() {
                     placeholder="Search name or roll no…"
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    className="border rounded px-3 py-2 text-sm flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-400 rounded px-3 py-2 text-md flex-1 min-w-[180px] focus:outline-none focus:ring-2 focus:ring-blue-400"
                 />
 
                 {/* Class filter */}
                 <select
                     value={filterClass}
                     onChange={(e) => { setFilterClass(e.target.value); setFilterSection(''); }}
-                    className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                     <option value="">All Classes</option>
                     {classes.map((c) => (
@@ -187,7 +187,7 @@ export default function Students() {
                     <select
                         value={filterSection}
                         onChange={(e) => setFilterSection(e.target.value)}
-                        className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                        className="border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                     >
                         <option value="">All Sections</option>
                         {availableSections.map((sec) => (
@@ -200,7 +200,7 @@ export default function Students() {
                 <select
                     value={filterGender}
                     onChange={(e) => setFilterGender(e.target.value)}
-                    className="border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                    className="border border-gray-400 rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                 >
                     <option value="">All Genders</option>
                     <option value="Male">Male</option>
@@ -227,9 +227,9 @@ export default function Students() {
             {loading ? (
                 <p className="text-gray-400 text-sm">Loading…</p>
             ) : (
-                <div className="overflow-x-auto rounded border border-gray-200">
-                    <table className="w-full text-sm">
-                        <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
+                <div className="overflow-x-auto rounded border border-gray-300">
+                    <table className="w-full text-md body-text">
+                        <thead className="bg-gray-50 text-gray-600 uppercase text-md">
                             <tr>
                                 <th className="px-4 py-3 text-left">Roll #</th>
                                 <th className="px-4 py-3 text-left">Name</th>
@@ -247,7 +247,7 @@ export default function Students() {
                                 </tr>
                             ) : (
                                 filtered.map((s) => (
-                                    <tr key={s._id} className="hover:bg-gray-50 transition-colors">
+                                    <tr key={s._id} className="hover:bg-gray-200 transition-colors">
                                         <td className="px-4 py-3 text-gray-500">{s.rollNumber}</td>
                                         <td className="px-4 py-3 font-medium text-gray-800">{s.firstName} {s.lastName}</td>
                                         <td className="px-4 py-3 text-gray-600">{s.gender}</td>
