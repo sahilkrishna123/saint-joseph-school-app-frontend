@@ -1,4 +1,5 @@
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 
 const links = [
     { to: '/dashboard/students', label: 'Students' },
@@ -11,6 +12,14 @@ const links = [
 const activeStyle = { fontWeight: 'bold', background: '#e0e0e0', borderRadius: 4 };
 
 export default function Sidebar() {
+    const { logout } = useAuth();
+    const navigate = useNavigate();
+ 
+    const handleLogout = async () => {
+        await logout();
+        navigate('/login', { replace: true });
+    };
+
     return (
         <nav style={{ width: 220, padding: '1rem', borderRight: '1px solid #ddd' }}>
             <h2>Dashboard</h2>
@@ -31,8 +40,8 @@ export default function Sidebar() {
                         </NavLink>
                     </li>
                 ))}
-                <li style={{ marginTop: 'auto' }}>
-                    <button onClick={() => alert('Logout')}>Logout</button>
+                 <li style={{ marginTop: '15rem' }}>
+                    <button onClick={handleLogout}>Logout</button>
                 </li>
             </ul>
         </nav>

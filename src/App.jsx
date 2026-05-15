@@ -1,5 +1,7 @@
 import "./App.css";
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from "./context/AuthContext";
+import ProtectedRoute from "./Components/ProtectedRoute";
 import Login from "./Pages/Login";
 import Home from "./Pages/Home";
 import Dashboard from "./Pages/Dashboard";
@@ -11,12 +13,19 @@ import PrintCertificatesComponent from "./Components/PrintCertificatesComponent"
 
 export default function App() {
     return (
-        <>
-            <BrowserRouter>
+        <BrowserRouter>
+            <AuthProvider>
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />}>
+                    <Route
+                        path="/dashboard"
+                        element={
+                            <ProtectedRoute>
+                                <Dashboard />
+                            </ProtectedRoute>
+                        }
+                    >
                         <Route index element={<Navigate to="students" replace />} />
                         <Route path="students" element={<Students />} />
                         <Route path="add-students" element={<AddStudent />} />
@@ -25,19 +34,7 @@ export default function App() {
                         <Route path="print-certificates" element={<PrintCertificatesComponent />} />
                     </Route>
                 </Routes>
-            </BrowserRouter>
-            {/* <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/dashboard" element={<Dashboard />}>
-                        <Route index element={<Navigate to="/students" replace />} />
-                        <Route path="students" element={<Students />} />
-                        <Route path="classes" element={<Classes />} />
-                        <Route path="print-certificates" element={<PrintCertificatesComponent />} />
-                    </Route>
-                </Routes>
-            </BrowserRouter> */}
-        </>
+            </AuthProvider>
+        </BrowserRouter>
     );
 }
