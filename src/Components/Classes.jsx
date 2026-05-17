@@ -199,11 +199,11 @@ export default function Classes() {
 
             {/* ── Table ── */}
             {loading ? (
-                <p className="text-gray-400 text-sm">Loading…</p>
+                <p className="text-gray-400 ">Loading…</p>
             ) : (
                 <div className="overflow-x-auto rounded border border-gray-200">
                     <table className="w-full text-sm">
-                        <thead className="bg-gray-50 text-gray-600 uppercase text-xs">
+                        <thead className="bg-gray-50 text-gray-600 uppercase text-md">
                             <tr>
                                 <th className="px-4 py-3 text-left">Class Name</th>
                                 <th className="px-4 py-3 text-left">Has Sections</th>
@@ -211,7 +211,7 @@ export default function Classes() {
                                 <th className="px-4 py-3 text-left">Actions</th>
                             </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100">
+                        <tbody className="divide-y divide-gray-100 text-md">
                             {filtered.length === 0 ? (
                                 <tr>
                                     <td colSpan={4} className="px-4 py-6 text-center text-gray-400">

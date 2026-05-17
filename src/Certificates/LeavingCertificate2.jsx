@@ -27,7 +27,7 @@ export default function LeavingCertificate({ student, certType }) {
             }}>
                 {/* Background certificate image */}
                 <img
-                    src="/certificates/leaving-certificate.jpeg"
+                    src="/certificates/leaving-certificate-2.jpeg"
                     alt="Certificate"
                     style={{
                         position: 'absolute',

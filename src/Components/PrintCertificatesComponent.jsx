@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react';
 import { useReactToPrint } from 'react-to-print';
 import api from '../api/axios';
 import LeavingCertificate from '../Certificates/LeavingCertificate'
+import LeavingCertificate2 from '../Certificates/LeavingCertificate2'
 import ProvisionalCertificate from '../Certificates/ProvisionalCertificate'
 import CharacterCertificate from '../Certificates/CharacterCertificate'
 
@@ -10,8 +11,18 @@ const CERT_TYPES = [
         id: 'leaving',
         label: 'Leaving Certificate',
         shortLabel: 'LC',
-        width: '297mm',
-        height: '210mm',
+        width: '356mm',
+        height: '216mm',
+        color: '#1e3a5f',
+        accent: '#c8a951',
+        pageSize: '@page { size: 297mm 210mm landscape; margin: 0; }',
+    },
+    {
+        id: 'leaving2',
+        label: 'Leaving Certificate 2',
+        shortLabel: 'LC',
+        width: '356mm',
+        height: '216mm',
         color: '#1e3a5f',
         accent: '#c8a951',
         pageSize: '@page { size: 297mm 210mm landscape; margin: 0; }',
@@ -20,8 +31,8 @@ const CERT_TYPES = [
         id: 'provisional',
         label: 'Provisional Certificate',
         shortLabel: 'PC',
-        width: '148mm',
-        height: '210mm',
+        width: '356mm',
+        height: '216mm',
         color: '#1a4731',
         accent: '#d4a843',
         pageSize: '@page { size: 148mm 210mm portrait; margin: 0; }',
@@ -30,8 +41,8 @@ const CERT_TYPES = [
         id: 'character',
         label: 'Character Certificate',
         shortLabel: 'CC',
-        width: '210mm',
-        height: '297mm',
+        width: '356mm',
+        height: '216mm',
         color: '#3b1f5e',
         accent: '#c8953d',
         pageSize: '@page { size: 210mm 297mm portrait; margin: 0; }',
@@ -40,14 +51,16 @@ const CERT_TYPES = [
 
 function Certificate({ student, certType }) {
     if (certType.id === 'leaving') return <LeavingCertificate student={student} certType={certType} />;
+    if (certType.id === 'leaving2') return <LeavingCertificate2 student={student} certType={certType} />;
     if (certType.id === 'provisional') return <ProvisionalCertificate student={student} certType={certType} />;
     return <CharacterCertificate student={student} certType={certType} />;
 }
 
 // ── ScaledPreview ─────────────────────────────────────────────────────────────
-const MM_TO_PX = 3.7795;
-const PREVIEW_SCALE = 0.52;
-
+// const MM_TO_PX = 3.7795;
+// const PREVIEW_SCALE = 0.52;
+const MM_TO_PX = 4.1795;
+const PREVIEW_SCALE = 0.55;
 function parseMm(mmStr) { return parseFloat(mmStr) * MM_TO_PX; }
 
 function ScaledPreview({ certType, children }) {
@@ -108,15 +121,16 @@ export default function PrintCertificatesComponent() {
     const selectedClassObj = classes.find(c => c.name === filterClass || c._id === filterClass);
     const availableSections = selectedClassObj?.sections ?? [];
 
-    const filtered = students.filter(s => {
-        const fullName = `${s.firstName} ${s.lastName}`.toLowerCase();
-        const q = search.toLowerCase();
-        if (q && !fullName.includes(q) && !String(s.rollNumber).includes(q)) return false;
-        if (filterClass && s.class !== filterClass && s.classId?._id !== filterClass) return false;
-        if (filterSection && s.section !== filterSection) return false;
-        if (filterGender && s.gender !== filterGender) return false;
-        return true;
-    });
+    
+    // Updated filter
+const filtered = students.filter(s => {
+    const q = search.toLowerCase();
+    if (q && !s.fullName?.toLowerCase().includes(q) && !String(s.grNumber).includes(q)) return false;
+    if (filterClass && s.class !== filterClass && s.classId?._id !== filterClass) return false;
+    if (filterSection && s.section !== filterSection) return false;
+    if (filterGender && s.gender !== filterGender) return false;
+    return true;
+});
 
     const selectedStudents = students.filter(s => selectedIds.has(s._id));
     const allFilteredSelected = filtered.length > 0 && filtered.every(s => selectedIds.has(s._id));
@@ -237,60 +251,61 @@ export default function PrintCertificatesComponent() {
                 {error && <div className="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm border border-red-100">{error}</div>}
 
                 {/* Table */}
-                {loading ? (
-                    <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
-                        <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-3" />
-                        <p className="text-gray-400 text-sm">Loading students…</p>
-                    </div>
-                ) : (
-                    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
-                        <div className="overflow-x-auto">
-                            <table className="w-full text-md">
-                                <thead className="bg-gray-100 border-b border-gray-200">
-                                    <tr>
-                                        <th className="px-4 py-3 text-left w-10">
-                                            <input type="checkbox" checked={allFilteredSelected && filtered.length > 0}
-                                                ref={el => { if (el) el.indeterminate = someFilteredSelected && !allFilteredSelected; }}
-                                                onChange={allFilteredSelected ? deselectAll : selectAll}
-                                                className="rounded accent-blue-600 cursor-pointer" />
-                                        </th>
-                                        {['Roll #', 'Name', 'Gender', 'Class', 'Section', 'DOB', 'Preview'].map(h => (
-                                            <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{h}</th>
-                                        ))}
-                                    </tr>
-                                </thead>
-                                <tbody className="divide-y divide-gray-100">
-                                    {filtered.length === 0 ? (
-                                        <tr><td colSpan={8} className="px-4 py-10 text-center text-gray-400">No students found.</td></tr>
-                                    ) : filtered.map(s => {
-                                        const isSelected = selectedIds.has(s._id);
-                                        return (
-                                            <tr key={s._id} onClick={() => toggleStudent(s._id)}
-                                                className={`cursor-pointer transition-colors ${isSelected ? 'bg-blue-50 hover:bg-blue-100' : 'hover:bg-gray-50'}`}>
-                                                <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
-                                                    <input type="checkbox" checked={isSelected} onChange={() => toggleStudent(s._id)} className="rounded accent-blue-600 cursor-pointer" />
-                                                </td>
-                                                <td className="px-4 py-3 text-gray-500 font-mono">{s.rollNumber}</td>
-                                                <td className="px-4 py-3 font-medium text-gray-800">
-                                                    {s.firstName} {s.lastName}
-                                                    {isSelected && <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">Selected</span>}
-                                                </td>
-                                                <td className="px-4 py-3 text-gray-600">{s.gender}</td>
-                                                <td className="px-4 py-3 text-gray-600">{s.classId?.name ?? s.class}</td>
-                                                <td className="px-4 py-3 text-gray-600">{s.section ?? '—'}</td>
-                                                <td className="px-4 py-3 text-gray-600">{s.dateOfBirth?.slice(0, 10) ?? '—'}</td>
-                                                <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
-                                                    <button onClick={() => setPreviewStudent(s)}
-                                                        className="px-2.5 py-1 text-xs bg-purple-50 text-purple-600 rounded hover:bg-purple-100 transition-colors font-medium">Preview</button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                )}
+{loading ? (
+    <div className="bg-white rounded-xl border border-gray-200 p-12 text-center">
+        <div className="animate-spin w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full mx-auto mb-3" />
+        <p className="text-gray-400 text-sm">Loading students…</p>
+    </div>
+) : (
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+        <div className="overflow-x-auto">
+            <table className="w-full text-md">
+                <thead className="bg-gray-100 border-b border-gray-200">
+                    <tr>
+                        <th className="px-4 py-3 text-left w-10">
+                            <input type="checkbox" checked={allFilteredSelected && filtered.length > 0}
+                                ref={el => { if (el) el.indeterminate = someFilteredSelected && !allFilteredSelected; }}
+                                onChange={allFilteredSelected ? deselectAll : selectAll}
+                                className="rounded accent-blue-600 cursor-pointer" />
+                        </th>
+                        {['GR #', 'Name', 'Father Name', 'Gender', 'Class', 'Section', 'DOB', 'Preview'].map(h => (
+                            <th key={h} className="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">{h}</th>
+                        ))}
+                    </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                    {filtered.length === 0 ? (
+                        <tr><td colSpan={9} className="px-4 py-10 text-center text-gray-400">No students found.</td></tr>
+                    ) : filtered.map(s => {
+                        const isSelected = selectedIds.has(s._id);
+                        return (
+                            <tr key={s._id} onClick={() => toggleStudent(s._id)}
+                                className={`cursor-pointer transition-colors ${isSelected ? 'bg-blue-50 hover:bg-blue-100' : 'hover:bg-gray-50'}`}>
+                                <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
+                                    <input type="checkbox" checked={isSelected} onChange={() => toggleStudent(s._id)} className="rounded accent-blue-600 cursor-pointer" />
+                                </td>
+                                <td className="px-4 py-3 text-gray-500 font-mono">{s.grNumber}</td>
+                                <td className="px-4 py-3 font-medium text-gray-800">
+                                    {s.fullName}
+                                    {isSelected && <span className="ml-2 inline-flex items-center px-1.5 py-0.5 rounded text-xs font-medium bg-blue-100 text-blue-700">Selected</span>}
+                                </td>
+                                <td className="px-4 py-3 text-gray-600">{s.fatherName}</td>
+                                <td className="px-4 py-3 text-gray-600">{s.gender}</td>
+                                <td className="px-4 py-3 text-gray-600">{s.classId?.name ?? s.class}</td>
+                                <td className="px-4 py-3 text-gray-600">{s.section ?? '—'}</td>
+                                <td className="px-4 py-3 text-gray-600">{s.dateOfBirth ?? '—'}</td>
+                                <td className="px-4 py-3" onClick={e => e.stopPropagation()}>
+                                    <button onClick={() => setPreviewStudent(s)}
+                                        className="px-2.5 py-1 text-xs bg-purple-50 text-purple-600 rounded hover:bg-purple-100 transition-colors font-medium">Preview</button>
+                                </td>
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+        </div>
+    </div>
+)}
 
                 {/* Print summary bar */}
                 {selectedStudents.length > 0 && (
@@ -311,12 +326,12 @@ export default function PrintCertificatesComponent() {
             {/* Preview Modal */}
             {previewStudent && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4" onClick={() => setPreviewStudent(null)}>
-                    <div className="bg-white rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onClick={e => e.stopPropagation()}>
+                    <div className="bg-white w-300 rounded-2xl shadow-2xl overflow-hidden flex flex-col max-h-[90vh]" onClick={e => e.stopPropagation()}>
                         {/* Modal header */}
                         <div className="flex items-center justify-between px-5 py-4 border-b border-gray-200 flex-shrink-0">
                             <div>
                                 <h2 className="font-semibold text-gray-800">{selectedCertType.label} Preview</h2>
-                                <p className="text-xs text-gray-500 mt-0.5">{previewStudent.firstName} {previewStudent.lastName}</p>
+                                <p className="text-xs text-gray-500 mt-0.5">{previewStudent.fullName}</p>
                             </div>
                             <div className="flex items-center gap-2">
                                 <button onClick={() => toggleStudent(previewStudent._id)}

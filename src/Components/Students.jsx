@@ -2,14 +2,29 @@ import { useState, useEffect, useCallback } from 'react';
 import api from "../api/axios";
 
 const EMPTY_FORM = {
-    firstName: '',
-    lastName: '',
+    fullName: '',
+    fatherName: '',
+    surname: '',
+    grNumber: '',
     gender: '',
     dateOfBirth: '',
+    placeOfBirth: '',
+    dateOfAdmission: '',
     class: '',
     classId: '',
     section: '',
-    rollNumber: '',
+    classInWhichAdmitted: '',
+    lastSchoolAttended: '',
+    dateOfLeaving: '',
+    classFromWhichLeft: '',
+    reasonOfLeaving: '',
+    progessInStudies: '',
+    conduct: '',
+    remarks: '',
+    cnicNumber: '',
+    relationWithBeneficiary: '',
+    cellNumber: '',
+    seatNumber: '',
 };
 
 export default function Students() {
@@ -33,6 +48,20 @@ export default function Students() {
     // Delete confirm
     const [deleteTarget, setDeleteTarget] = useState(null);
 
+    const toInputDate = (val) => {
+        if (!val) return '';
+
+        // Backend format: "DD-MM-YYYY"
+        if (/^\d{2}-\d{2}-\d{4}$/.test(val)) {
+            const [day, month, year] = val.split('-');
+            return `${year}-${month}-${day}`; // → "YYYY-MM-DD" for input
+        }
+
+        // Fallback: ISO string
+        if (val.includes('T')) return val.slice(0, 10);
+
+        return '';
+    };
     // ── Fetch all students ──────────────────────────────────────────────────────
     const fetchStudents = useCallback(async () => {
         setLoading(true);
@@ -84,10 +113,12 @@ export default function Students() {
 
     // ── Filtered students list ──────────────────────────────────────────────────
     const filtered = students.filter((s) => {
-        const fullName = `${s.firstName} ${s.lastName}`.toLowerCase();
+
+        // const fullName = `${s.firstName} ${s.lastName}`.toLowerCase();
         const q = search.toLowerCase();
 
-        if (q && !fullName.includes(q) && !String(s.rollNumber).includes(q)) return false;
+        if (q && !s.fullName?.toLowerCase().includes(q) && !String(s.grNumber).includes(q)) return false;
+
         if (filterClass && s.class !== filterClass && s.classId?._id !== filterClass) return false;
         if (filterSection && s.section !== filterSection) return false;
         if (filterGender && s.gender !== filterGender) return false;
@@ -99,14 +130,29 @@ export default function Students() {
     const openEdit = (student) => {
         setEditStudent(student);
         setForm({
-            firstName: student.firstName ?? '',
-            lastName: student.lastName ?? '',
+            fullName: student.fullName ?? '',
+            fatherName: student.fatherName ?? '',
+            surname: student.surname ?? '',
+            grNumber: student.grNumber ?? '',
             gender: student.gender ?? '',
-            dateOfBirth: student.dateOfBirth?.slice(0, 10) ?? '',
-            class: student.class ?? '',
+            dateOfBirth: toInputDate(student.dateOfBirth),
+            placeOfBirth: student.placeOfBirth ?? '',
+            dateOfAdmission: toInputDate(student.dateOfAdmission),
+            class: student.classId?.name ?? student.class ?? '',
             classId: student.classId?._id ?? student.classId ?? '',
             section: student.section ?? '',
-            rollNumber: student.rollNumber ?? '',
+            classInWhichAdmitted: student.classInWhichAdmitted ?? '',
+            lastSchoolAttended: student.lastSchoolAttended ?? '',
+            dateOfLeaving: toInputDate(student.dateOfLeaving),
+            classFromWhichLeft: student.classFromWhichLeft ?? '',
+            reasonOfLeaving: student.reasonOfLeaving ?? '',
+            progessInStudies: student.progessInStudies ?? '',
+            conduct: student.conduct ?? '',
+            remarks: student.remarks ?? '',
+            cnicNumber: student.cnicNumber ?? '',
+            relationWithBeneficiary: student.relationWithBeneficiary ?? '',
+            cellNumber: student.cellNumber ?? '',
+            seatNumber: student.seatNumber ?? '',
         });
         setModalOpen(true);
     };
@@ -119,7 +165,8 @@ export default function Students() {
 
     // ── Save (update) ───────────────────────────────────────────────────────────
     const handleSave = async () => {
-        if (!form.firstName.trim()) return;
+        if (!form.fullName.trim()) return;
+
         setSaving(true);
         try {
             await api.patch(`/students/${editStudent._id}`, form);
@@ -228,15 +275,32 @@ export default function Students() {
                 <p className="text-gray-400 text-sm">Loading…</p>
             ) : (
                 <div className="overflow-x-auto rounded border border-gray-300">
-                    <table className="w-full text-md body-text">
+                    <table className="w-full text-md body-text table-auto">
                         <thead className="bg-gray-50 text-gray-600 uppercase text-md">
                             <tr>
-                                <th className="px-4 py-3 text-left">Roll #</th>
+                                <th className="px-4 py-3 text-left min-w-[150px]">G.R No.</th>
                                 <th className="px-4 py-3 text-left">Name</th>
-                                <th className="px-4 py-3 text-left">Gender</th>
+                                <th className="px-4 py-3 text-left">F.Name</th>
+                                <th className="px-4 py-3 text-left">Surname</th>
                                 <th className="px-4 py-3 text-left">Class</th>
                                 <th className="px-4 py-3 text-left">Section</th>
-                                <th className="px-4 py-3 text-left">DOB</th>
+                                <th className="px-4 py-3 text-left min-w-[150px]">Date Of Birth</th>
+                                <th className="px-4 py-3 text-left">Place Of Birth</th>
+                                <th className="px-4 py-3 text-left min-w-[150px]">Date Of Admission</th>
+                                <th className="px-4 py-3 text-left">Gender</th>
+                                <th className="px-4 py-3 text-left">Class In Which Admitted</th>
+                                <th className="px-4 py-3 text-left min-w-[150px]">Last School Attended</th>
+                                <th className="px-4 py-3 text-left min-w-[150px]">Date Of Leaving</th>
+                                <th className="px-4 py-3 text-left">Class From Which Left</th>
+                                <th className="px-4 py-3 text-left">Reason Of Leaving</th>
+                                <th className="px-4 py-3 text-left">Progress In Studies</th>
+                                <th className="px-4 py-3 text-left">Conduct</th>
+                                <th className="px-4 py-3 text-left">Remarks</th>
+                                <th className="px-4 py-3 text-left min-w-[180px]">CNIC Number</th>
+                                <th className="px-4 py-3 text-left">Relation With Beneficiary</th>
+                                <th className="px-4 py-3 text-left">Cell Number</th>
+                                <th className="px-4 py-3 text-left min-w-[160px]">Seat No.</th>
+
                                 <th className="px-4 py-3 text-left">Actions</th>
                             </tr>
                         </thead>
@@ -248,12 +312,29 @@ export default function Students() {
                             ) : (
                                 filtered.map((s) => (
                                     <tr key={s._id} className="hover:bg-gray-200 transition-colors">
-                                        <td className="px-4 py-3 text-gray-500">{s.rollNumber}</td>
-                                        <td className="px-4 py-3 font-medium text-gray-800">{s.firstName} {s.lastName}</td>
-                                        <td className="px-4 py-3 text-gray-600">{s.gender}</td>
-                                        <td className="px-4 py-3 text-gray-600">{s.classId?.name ?? s.class}</td>
-                                        <td className="px-4 py-3 text-gray-600">{s.section}</td>
-                                        <td className="px-4 py-3 text-gray-600">{s.dateOfBirth?.slice(0, 10)}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.grNumber}</td>
+                                        <td className="px-4 py-3 font-medium text-gray-900">{s.fullName}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.fatherName}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.surname}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.classId?.name ?? s.class}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.section}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.dateOfBirth}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.placeOfBirth}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.dateOfAdmission}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.gender}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.classInWhichAdmitted}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.lastSchoolAttended}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.dateOfLeaving}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.classFromWhichLeft}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.reasonOfLeaving}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.progessInStudies}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.conduct}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.remarks}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.cnicNumber}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.relationWithBeneficiary}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.cellNumber}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.seatNumber}</td>
+
                                         <td className="px-4 py-3 flex gap-2">
                                             <button
                                                 onClick={() => openEdit(s)}
@@ -279,32 +360,39 @@ export default function Students() {
             {/* ── Edit Modal ── */}
             {modalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-                    <div className="bg-white rounded-lg shadow-xl w-full max-w-lg p-6 space-y-4">
+                    <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
                         <h2 className="text-lg font-semibold text-gray-800">Edit Student</h2>
 
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">First Name</label>
+                                <label className="block text-xs text-gray-500 mb-1">Full Name</label>
                                 <input
-                                    value={form.firstName}
-                                    onChange={(e) => setForm({ ...form, firstName: e.target.value })}
+                                    value={form.fullName}
+                                    onChange={(e) => setForm({ ...form, fullName: e.target.value })}
                                     className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Last Name</label>
+                                <label className="block text-xs text-gray-500 mb-1">Father Name</label>
                                 <input
-                                    value={form.lastName}
-                                    onChange={(e) => setForm({ ...form, lastName: e.target.value })}
+                                    value={form.fatherName}
+                                    onChange={(e) => setForm({ ...form, fatherName: e.target.value })}
                                     className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
                             </div>
                             <div>
-                                <label className="block text-xs text-gray-500 mb-1">Roll Number</label>
+                                <label className="block text-xs text-gray-500 mb-1">Surname</label>
                                 <input
-                                    type="number"
-                                    value={form.rollNumber}
-                                    onChange={(e) => setForm({ ...form, rollNumber: e.target.value })}
+                                    value={form.surname}
+                                    onChange={(e) => setForm({ ...form, surname: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">GR Number</label>
+                                <input
+                                    value={form.grNumber}
+                                    onChange={(e) => setForm({ ...form, grNumber: e.target.value })}
                                     className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
                             </div>
@@ -326,6 +414,23 @@ export default function Students() {
                                     type="date"
                                     value={form.dateOfBirth}
                                     onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Place of Birth</label>
+                                <input
+                                    value={form.placeOfBirth}
+                                    onChange={(e) => setForm({ ...form, placeOfBirth: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Date of Admission</label>
+                                <input
+                                    type="date"
+                                    value={form.dateOfAdmission}
+                                    onChange={(e) => setForm({ ...form, dateOfAdmission: e.target.value })}
                                     className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
                             </div>
@@ -360,6 +465,103 @@ export default function Students() {
                                     </select>
                                 </div>
                             )}
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Class In Which Admitted</label>
+                                <input
+                                    value={form.classInWhichAdmitted}
+                                    onChange={(e) => setForm({ ...form, classInWhichAdmitted: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Last School Attended</label>
+                                <input
+                                    value={form.lastSchoolAttended}
+                                    onChange={(e) => setForm({ ...form, lastSchoolAttended: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Date of Leaving</label>
+                                <input
+                                    type="date"
+                                    value={form.dateOfLeaving}
+                                    onChange={(e) => setForm({ ...form, dateOfLeaving: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Class From Which Left</label>
+                                <input
+                                    value={form.classFromWhichLeft}
+                                    onChange={(e) => setForm({ ...form, classFromWhichLeft: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Reason of Leaving</label>
+                                <input
+                                    value={form.reasonOfLeaving}
+                                    onChange={(e) => setForm({ ...form, reasonOfLeaving: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Progress In Studies</label>
+                                <input
+                                    value={form.progessInStudies}
+                                    onChange={(e) => setForm({ ...form, progessInStudies: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Conduct</label>
+                                <input
+                                    value={form.conduct}
+                                    onChange={(e) => setForm({ ...form, conduct: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Remarks</label>
+                                <input
+                                    value={form.remarks}
+                                    onChange={(e) => setForm({ ...form, remarks: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">CNIC Number</label>
+                                <input
+                                    value={form.cnicNumber}
+                                    onChange={(e) => setForm({ ...form, cnicNumber: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Relation With Beneficiary</label>
+                                <input
+                                    value={form.relationWithBeneficiary}
+                                    onChange={(e) => setForm({ ...form, relationWithBeneficiary: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Cell Number</label>
+                                <input
+                                    value={form.cellNumber}
+                                    onChange={(e) => setForm({ ...form, cellNumber: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Seat Number</label>
+                                <input
+                                    value={form.seatNumber}
+                                    onChange={(e) => setForm({ ...form, seatNumber: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                />
+                            </div>
                         </div>
 
                         <div className="flex justify-end gap-3 pt-2">
@@ -380,14 +582,13 @@ export default function Students() {
                     </div>
                 </div>
             )}
-
             {/* ── Delete Confirm ── */}
             {deleteTarget && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                     <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm space-y-4">
                         <h2 className="text-lg font-semibold text-gray-800">Delete Student</h2>
                         <p className="text-sm text-gray-600">
-                            Are you sure you want to delete <strong>{deleteTarget.firstName} {deleteTarget.lastName}</strong>? This cannot be undone.
+                            Are you sure you want to delete <strong>{deleteTarget.fullName}</strong>? This cannot be undone.
                         </p>
                         <div className="flex justify-end gap-3">
                             <button
