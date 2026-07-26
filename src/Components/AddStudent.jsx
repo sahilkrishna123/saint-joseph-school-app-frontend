@@ -17,6 +17,7 @@ const EMPTY_FORM = {
     lastSchoolAttended: '',
     dateOfLeaving: '',
     classFromWhichLeft: '',
+    grade: '',
     reasonOfLeaving: '',
     progessInStudies: '',
     conduct: '',
@@ -160,6 +161,7 @@ export default function AddStudent() {
             lastSchoolAttended: form.lastSchoolAttended || undefined,
             dateOfLeaving: form.dateOfLeaving || undefined,
             classFromWhichLeft: form.classFromWhichLeft || undefined,
+            grade: form.grade || undefined,
             reasonOfLeaving: form.reasonOfLeaving || undefined,
             progessInStudies: form.progessInStudies || undefined,
             conduct: form.conduct || undefined,
@@ -179,7 +181,7 @@ export default function AddStudent() {
 
             setForm(EMPTY_FORM);
             setErrors(EMPTY_ERRORS);
-        } 
+        }
         catch (err) {
             const data = err.response?.data;
             const raw = data?.message || '';
@@ -410,7 +412,41 @@ export default function AddStudent() {
                         />
                     </Field>
                 </div>
+                {/* d */}
 
+                <div className="grid grid-cols-2 gap-4">
+                    <Field label="Passing Grade" error="">
+                        {/* <input
+                            type="text"
+                            placeholder=""
+                            value={form.reasonOfLeaving}
+                            onChange={(e) => set('reasonOfLeaving', e.target.value)}
+                            className={inputClass('reasonOfLeaving')}
+                        /> */}
+                        <select
+                            value={form.grade}
+                            onChange={(e) => set("grade", e.target.value)}
+                            className={inputClass("grade")}
+                        >
+                            <option value="">Select an option</option>
+                            <option value="A1">A1</option>
+                            <option value="A">A</option>
+                            <option value="B">B</option>
+                            <option value="C">C</option>
+                            <option value="D">D</option>
+                        </select>
+                    </Field>
+                    {/* <Field label="Progress In Studies" error="">
+                        <input
+                            type="text"
+                            placeholder=""
+                            value={form.progessInStudies}
+                            onChange={(e) => set('progessInStudies', e.target.value)}
+                            className={inputClass('progessInStudies')}
+                        />
+                    </Field> */}
+                </div>
+                {/* d */}
                 <div className="grid grid-cols-2 gap-4">
                     <Field label="Reason of Leaving" error="">
                         <input

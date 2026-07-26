@@ -18,6 +18,7 @@ const EMPTY_FORM = {
     lastSchoolAttended: '',
     dateOfLeaving: '',
     classFromWhichLeft: '',
+    grade: '',
     reasonOfLeaving: '',
     progessInStudies: '',
     conduct: '',
@@ -147,6 +148,7 @@ export default function Students() {
             lastSchoolAttended: student.lastSchoolAttended ?? '',
             dateOfLeaving: toInputDate(student.dateOfLeaving),
             classFromWhichLeft: student.classFromWhichLeft ?? '',
+            grade: student.grade ?? '',
             reasonOfLeaving: student.reasonOfLeaving ?? '',
             progessInStudies: student.progessInStudies ?? '',
             conduct: student.conduct ?? '',
@@ -292,6 +294,8 @@ export default function Students() {
                                 <th className="px-4 py-3 text-left">Character Certificate</th>
 
                                 <th className="px-4 py-3 text-left min-w-[150px]">Date Of Birth</th>
+                                <th className="py-2 text-left">Grade</th>
+
                                 <th className="px-4 py-3 text-left">Place Of Birth</th>
                                 <th className="px-4 py-3 text-left min-w-[150px]">Date Of Admission</th>
                                 <th className="px-4 py-3 text-left">Gender</th>
@@ -342,6 +346,7 @@ export default function Students() {
 
                                         </th>
                                         <td className="px-4 py-3 text-gray-900">{s.dateOfBirth}</td>
+                                        <td className="px-4 py-3 text-gray-900">{s.grade}</td>
                                         <td className="px-4 py-3 text-gray-900">{s.placeOfBirth}</td>
                                         <td className="px-4 py-3 text-gray-900">{s.dateOfAdmission}</td>
                                         <td className="px-4 py-3 text-gray-900">{s.gender}</td>
@@ -382,7 +387,7 @@ export default function Students() {
 
             {/* ── Edit Modal ── */}
 
-            
+
             {modalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                     <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
@@ -574,6 +579,21 @@ export default function Students() {
                                     onChange={(e) => setForm({ ...form, classFromWhichLeft: e.target.value })}
                                     className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Grade</label>
+                                <select
+                                    value={form.grade}
+                                    onChange={(e) => setForm({ ...form, grade: e.target.value })}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                >
+                                    <option value="">Select grade</option>
+                                    <option value="A1">A1</option>
+                                    <option value="A">A</option>
+                                    <option value="B">B</option>
+                                    <option value="C">C</option>
+                                    <option value="D">D</option>
+                                </select>
                             </div>
                             <div>
                                 <label className="block text-xs text-gray-500 mb-1">Reason of Leaving</label>
