@@ -127,9 +127,15 @@ export default function ProvisionalCertificate({ student, certType }) {
         <>
             <div style={{
                 position: 'relative',
-                width: '100%',        // fills whatever container the print gives it
-                aspectRatio: '356 / 216',  // matches certType: 148mm × 210mm portrait
+                left: 50, // left margin
+                width: '330mm',
+                height: '216mm',
+                overflow: 'hidden',
                 display: 'block',
+                // position: 'relative',
+                // width: '100%',        // fills whatever container the print gives it
+                // aspectRatio: '356 / 216',  // matches certType: 148mm × 210mm portrait
+                // display: 'block',
             }}>
                 {/* Background certificate image */}
                 <img
