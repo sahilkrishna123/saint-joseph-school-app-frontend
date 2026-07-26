@@ -119,7 +119,7 @@ export default function LeavingCertificate({ student, certType }) {
                     width: '100%',
                     height: '100%',
                     objectFit: 'fill',   // must be 'fill' so overlay aligns exactly
-                    display: 'block', // set to display none 
+                    display: 'none', // set to display none 
                 }}
             />
 
