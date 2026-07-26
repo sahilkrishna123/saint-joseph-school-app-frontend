@@ -7,6 +7,7 @@ const EMPTY_FORM = {
     surname: '',
     grNumber: '',
     gender: '',
+    leavingCertificateIssued: '',
     dateOfBirth: '',
     placeOfBirth: '',
     dateOfAdmission: '',
@@ -135,6 +136,7 @@ export default function Students() {
             surname: student.surname ?? '',
             grNumber: student.grNumber ?? '',
             gender: student.gender ?? '',
+            leavingCertificateIssued: student.leavingCertificateIssued,
             dateOfBirth: toInputDate(student.dateOfBirth),
             placeOfBirth: student.placeOfBirth ?? '',
             dateOfAdmission: toInputDate(student.dateOfAdmission),
@@ -284,6 +286,8 @@ export default function Students() {
                                 <th className="px-4 py-3 text-left">Surname</th>
                                 <th className="px-4 py-3 text-left">Class</th>
                                 <th className="px-4 py-3 text-left">Section</th>
+                                <th className="px-4 py-3 text-left">Leaving Certiciate</th>
+
                                 <th className="px-4 py-3 text-left min-w-[150px]">Date Of Birth</th>
                                 <th className="px-4 py-3 text-left">Place Of Birth</th>
                                 <th className="px-4 py-3 text-left min-w-[150px]">Date Of Admission</th>
@@ -318,6 +322,10 @@ export default function Students() {
                                         <td className="px-4 py-3 text-gray-900">{s.surname}</td>
                                         <td className="px-4 py-3 text-gray-900">{s.classId?.name ?? s.class}</td>
                                         <td className="px-4 py-3 text-gray-900">{s.section}</td>
+                                        <th className="px-4 py-3 text-gray-900">
+                                            {!s.leavingCertificateIssued ? "Not Issued" : "Issued"}
+
+                                        </th>
                                         <td className="px-4 py-3 text-gray-900">{s.dateOfBirth}</td>
                                         <td className="px-4 py-3 text-gray-900">{s.placeOfBirth}</td>
                                         <td className="px-4 py-3 text-gray-900">{s.dateOfAdmission}</td>
@@ -416,6 +424,19 @@ export default function Students() {
                                     onChange={(e) => setForm({ ...form, dateOfBirth: e.target.value })}
                                     className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 />
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Leaving Certificate Issuance</label>
+                                <select
+                                    value={form.leavingCertificateIssued}
+                                    onChange={(e) => {
+                                        setForm({ ...form, leavingCertificateIssued: e.target.value });
+                                    }}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                >
+                                    <option key="1" value={false}>Not Issued</option>
+                                    <option key="2" value={true}>Issued</option>
+                                </select>
                             </div>
                             <div>
                                 <label className="block text-xs text-gray-500 mb-1">Place of Birth</label>
