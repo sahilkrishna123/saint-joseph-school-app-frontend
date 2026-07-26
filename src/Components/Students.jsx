@@ -286,7 +286,10 @@ export default function Students() {
                                 <th className="px-4 py-3 text-left">Surname</th>
                                 <th className="px-4 py-3 text-left">Class</th>
                                 <th className="px-4 py-3 text-left">Section</th>
-                                <th className="px-4 py-3 text-left">Leaving Certiciate</th>
+                                <th className="px-4 py-3 text-left">Leaving Certificate</th>
+                                <th className="px-4 py-3 text-left">Leaving Certificate 2</th>
+                                <th className="px-4 py-3 text-left">Provisional Certificate</th>
+                                <th className="px-4 py-3 text-left">Character Certificate</th>
 
                                 <th className="px-4 py-3 text-left min-w-[150px]">Date Of Birth</th>
                                 <th className="px-4 py-3 text-left">Place Of Birth</th>
@@ -324,6 +327,18 @@ export default function Students() {
                                         <td className="px-4 py-3 text-gray-900">{s.section}</td>
                                         <th className="px-4 py-3 text-gray-900">
                                             {!s.leavingCertificateIssued ? "Not Issued" : "Issued"}
+
+                                        </th>
+                                        <th className="px-4 py-3 text-gray-900">
+                                            {!s.leavingCertificateTwoIssued ? "Not Issued" : "Issued"}
+
+                                        </th>
+                                        <th className="px-4 py-3 text-gray-900">
+                                            {!s.provisionalCertificateIssued ? "Not Issued" : "Issued"}
+
+                                        </th>
+                                        <th className="px-4 py-3 text-gray-900">
+                                            {!s.characterCertificateIssued ? "Not Issued" : "Issued"}
 
                                         </th>
                                         <td className="px-4 py-3 text-gray-900">{s.dateOfBirth}</td>
@@ -366,6 +381,8 @@ export default function Students() {
             )}
 
             {/* ── Edit Modal ── */}
+
+            
             {modalOpen && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                     <div className="bg-white rounded-lg shadow-xl w-full max-w-3xl p-6 space-y-4 max-h-[90vh] overflow-y-auto">
@@ -431,6 +448,45 @@ export default function Students() {
                                     value={form.leavingCertificateIssued}
                                     onChange={(e) => {
                                         setForm({ ...form, leavingCertificateIssued: e.target.value });
+                                    }}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                >
+                                    <option key="1" value={false}>Not Issued</option>
+                                    <option key="2" value={true}>Issued</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Leaving Certificate 2 Issuance</label>
+                                <select
+                                    value={form.leavingCertificateTwoIssued}
+                                    onChange={(e) => {
+                                        setForm({ ...form, leavingCertificateTwoIssued: e.target.value });
+                                    }}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                >
+                                    <option key="1" value={false}>Not Issued</option>
+                                    <option key="2" value={true}>Issued</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Provisional Certificate Issuance</label>
+                                <select
+                                    value={form.provisionalCertificateIssued}
+                                    onChange={(e) => {
+                                        setForm({ ...form, provisionalCertificateIssued: e.target.value });
+                                    }}
+                                    className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
+                                >
+                                    <option key="1" value={false}>Not Issued</option>
+                                    <option key="2" value={true}>Issued</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-xs text-gray-500 mb-1">Character Certificate Issuance</label>
+                                <select
+                                    value={form.characterCertificateIssued}
+                                    onChange={(e) => {
+                                        setForm({ ...form, characterCertificateIssued: e.target.value });
                                     }}
                                     className="w-full border rounded px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-400"
                                 >

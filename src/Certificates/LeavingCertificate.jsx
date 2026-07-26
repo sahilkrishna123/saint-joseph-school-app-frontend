@@ -49,20 +49,15 @@ export default function LeavingCertificate({ student, certType }) {
                 }}
             />
 
-            {/* Left Side*/}
-            {/* <Field top={36.6} left={45} value={`${student.grNumber}`} />
-            <Field top={36.6} left={85} value={`${student.seatNumber}`} />
-            <Field top={41.4} left={15} value={`${student.fullName}`} /> */}
-
             {/* Left Side */}
-            <Field top={36.6} left={45} value={safe(student.grNumber)} />
+            <Field top={38} left={8.5} value={safe(student.grNumber)} />
             <Field top={36.6} left={85} value={safe(student.seatNumber)} />
             <Field top={41.4} left={15} value={safe(student.fullName)} />
  
             {/* Right Side */}
             <Field top={36.6} left={45} value={safe(student.grNumber)} />
             <Field top={36.6} left={85} value={safe(student.seatNumber)} />
-            {!student.leavingCertificateIssued && (
+            {student.leavingCertificateIssued && (
                 <Field top={36.6} left={60} value="DUPLICATE" />
             )}
             <Field top={39.8} left={62} value={safe(student.fullName)} />
