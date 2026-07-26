@@ -190,7 +190,6 @@ export default function ProvisionalCertificate({ student, certType }) {
 
                 <Field top={48} left={78} value={safe(student.fullName)} />
                 <Field top={51.5} left={60} value={safe(student.fatherName)} />
-                {/* <Field top={51.5} left={60} value="Field Marshal Syed Asim Munir Chief Of Defense Forces"  /> */}
                 <Field top={51.5} left={87} value={safe(student.surname)} />
 
                 <Field top={55} left={73} value={safe(student.seatNumber)} />
