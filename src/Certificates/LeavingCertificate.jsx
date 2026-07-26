@@ -87,7 +87,7 @@ export default function LeavingCertificate({ student, certType }) {
                 words += ` ${ones[hundreds]} Hundred`;
             }
             if (lastTwo > 0) {
-                words += `${hundreds > 0 || thousands > 0 ? ' and' : ''} ${twoDigitWords(lastTwo)}`;
+                words += `${hundreds > 0 || thousands > 0 ? ' ' : ''} ${twoDigitWords(lastTwo)}`;
             }
             return words.trim();
         };
@@ -116,7 +116,7 @@ export default function LeavingCertificate({ student, certType }) {
                     width: '100%',
                     height: '100%',
                     objectFit: 'fill',   // must be 'fill' so overlay aligns exactly
-                    display: 'none', // make display none 
+                    display: 'none', // set to display none 
                 }}
             />
 
