@@ -142,7 +142,7 @@ export default function LeavingCertificate({ student, certType }) {
             <FieldLeft top={74.5} left={13.7} value={safe(student.seatNumber)} />
             <FieldLeft top={74.5} left={25} value={safe(student.grade)} />
 
-            <FieldLeft top={89.5} left={6.5} value="26-07-2026" />
+            <FieldLeft top={89.5} left={6.5} value="21-07-2026" />
 
             {/* Right Side */}
             <Field top={36.2} left={45} value={safe(student.grNumber)} />
@@ -169,7 +169,7 @@ export default function LeavingCertificate({ student, certType }) {
 
             <Field top={72.5} left={73} value={safe(student.grade)} />
 
-            <Field top={86.4} left={42.5} value="26-07-2026" />
+            <Field top={86.4} left={42.5} value="21-07-2026" />
 
         </div>
 
