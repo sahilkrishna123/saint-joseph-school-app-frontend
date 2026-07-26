@@ -1,5 +1,14 @@
 export default function CharacterCertificate({ student, certType }) {
     const today = new Date().toLocaleDateString('en-PK', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    // Safe accessor — returns empty string for null/undefined/whitespace values
+    const safe = (val) => {
+        if (val === undefined || val === null) return '';
+        const str = String(val).trim();
+        return str === 'null' || str === 'undefined' ? '' : str;
+    };
+
+    
     // Helper for absolutely-positioned overlay fields
     const Field = ({ top, left, width, value, style = {} }) => (
         <span style={{

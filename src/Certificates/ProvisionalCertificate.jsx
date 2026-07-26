@@ -158,64 +158,63 @@ export default function ProvisionalCertificate({ student, certType }) {
                 <FieldLeft top={51.5} left={14.3} value={safe(student.fatherName)} />
                 <FieldLeft top={51.5} left={27} value={safe(student.surname)} />
                 <FieldLeft top={55} left={22.5} value={safe(student.seatNumber)} />
-                <FieldLeft top={58.5} left={26} value="2026" />
-                <FieldLeft top={65} left={9} value="April" />
-                <FieldLeft top={65} left={17.4} value={safe(student.grade)} />
-                <FieldLeft top={71.8} left={27} value={safe(student.dateOfBirth)} />
-                <FieldLeft top={92.5} left={8} value="21-07-2026" />
+                <FieldLeft top={58} left={26} value="2026" />
+                <FieldLeft top={64.5} left={9} value="April" />
+                <FieldLeft top={64.5} left={17.4} value={safe(student.grade)} />
+                <FieldLeft top={70.6} left={27} value={safe(student.dateOfBirth)} />
 
-                <FieldLeft top={75} left={12} value={dayWord} />
-                <FieldLeft top={75} left={25} value={monthWord} />
+                <FieldLeft top={74.5} left={12} value={dayWord} />
+                <FieldLeft top={74.5} left={25} value={monthWord} />
 
+                <FieldLeft top={90.5} left={9} value="21-07-2026" />
                 {dobYear >= 2000 && (
                     <>
-                        <StrikeThrough top={79.5} left={4.5} width={6} />
-                        <FieldLeft top={78.5} left={21} value={`Two Thousand ${yearWord}`} />
+                        <StrikeThrough top={78.3} left={5.5} width={6} />
+                        <FieldLeft top={77.5} left={21} value={`Two Thousand ${yearWord}`} />
                     </>
 
                 )}
                 {dobYear > 0 && dobYear < 2000 && (
                     <>
-                        <StrikeThrough top={78.6} left={51.5} width={6.5} />
+                        {/* <StrikeThrough top={78.6} left={51.5} width={6.5} /> */}
                         <FieldLeft top={78.5} left={21} value={yearWord} />
                     </>
                 )}
-                <FieldLeft top={90} left={48} value="21-07-2026" />
 
 
 
 
 
                 {/* Right Side */}
-                <Field top={40} left={51} value={safe(student.grNumber)} />
-                <Field top={40} left={90} value={safe(student.seatNumber)} />
+                <Field top={40.4} left={49} value={safe(student.grNumber)} />
+                <Field top={40.4} left={87} value={safe(student.seatNumber)} />
 
                 {student.provisionalCertificateIssued && (
                     <Field top={36.6} left={60} value="DUPLICATE" />
                 )}
 
-                <Field top={48} left={78} value={safe(student.fullName)} />
+                <Field top={47.6} left={77.2} value={safe(student.fullName)} />
                 <Field top={51.5} left={60} value={safe(student.fatherName)} />
-                <Field top={51.5} left={87} value={safe(student.surname)} />
+                <Field top={51.5} left={84} value={safe(student.surname)} />
 
-                <Field top={55} left={73} value={safe(student.seatNumber)} />
-                <Field top={59} left={80} value="2026" />
-                <Field top={62.5} left={86} value="April" />
-                <Field top={66} left={47} value={safe(student.grade)} />
-                <Field top={70} left={84} value={safe(student.dateOfBirth)} />
+                <Field top={55} left={70} value={safe(student.seatNumber)} />
+                <Field top={58.5} left={78} value="2026" />
+                <Field top={61.7} left={84} value="April" />
+                <Field top={65.5} left={47} value={safe(student.grade)} />
+                <Field top={69} left={82} value={safe(student.dateOfBirth)} />
 
-                <Field top={74} left={52.5} value={dayWord} />
-                <Field top={74} left={79} value={monthWord} />
-                <Field top={77.5} left={76} value={yearWord} />
+                <Field top={72} left={52.4} value={dayWord} />
+                <Field top={72} left={77} value={monthWord} />
+                <Field top={76} left={75} value={yearWord} />
 
                 {dobYear >= 2000 && (
-                    <StrikeThrough top={78.6} left={39} width={11.4} />  // strikes "one thousand nine hundred"
+                    <StrikeThrough top={77.6} left={38} width={11.4} />  // strikes "one thousand nine hundred"
                 )}
                 {dobYear > 0 && dobYear < 2000 && (
-                    <StrikeThrough top={78.6} left={51.5} width={6.5} />  // strikes "two thousand"
+                    <StrikeThrough top={76.6} left={50.5} width={6.5} />  // strikes "two thousand"
                 )}
 
-                <Field top={90} left={48} value="21-07-2026" />
+                <Field top={88} left={47.6} value="21-07-2026" />
 
             </div>
 
