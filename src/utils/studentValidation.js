@@ -44,9 +44,7 @@ export const CERT_REQUIRED_FIELDS = {
         { key: 'grNumber', label: 'GR Number' },
         { key: 'fullName', label: 'Full Name' },
         { key: 'fatherName', label: 'Father Name' },
-        { key: 'conduct', label: 'Conduct' },
-        { key: 'dateOfLeaving', label: 'Date of Leaving' },
-        { key: 'class', label: 'Class' },
+        { key: 'surname', label: 'Surname' },
     ],
 };
 

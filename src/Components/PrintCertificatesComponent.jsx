@@ -36,7 +36,7 @@ const CERT_TYPES = [
         id: 'provisional',
         label: 'Provisional Certificate',
         shortLabel: 'PC',
-         width: '330mm',
+        width: '330mm',
         height: '216mm',
         color: '#1a4731',
         accent: '#d4a843',
@@ -50,7 +50,7 @@ const CERT_TYPES = [
         height: '216mm',
         color: '#3b1f5e',
         accent: '#c8953d',
-        pageSize: '@page { size: 210mm 297mm portrait; margin: 0; }',
+        pageSize: '@page { size: 330mm 216mm ; margin: 0; }',
     },
 ];
 
