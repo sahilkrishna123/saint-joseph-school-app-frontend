@@ -59,7 +59,7 @@ export default function CharacterCertificate({ student, certType }) {
             {/* <Field top={40} left={88} value={`${student.seatNumber}`} /> */}
 
 
-            <Field top={50} left={22.5} value={`${student.fullName}`} />
+            <Field top={49} left={25} value={`${student.fullName}`} />
             <Field top={54.6} left={9} value={`${student.fatherName}`} />
             <Field top={54.6} left={28} value={`${student.surname}`} />
             <Field top={61.2} left={7} value={`${student.grNumber}`} />
