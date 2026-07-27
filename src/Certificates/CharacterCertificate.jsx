@@ -53,21 +53,21 @@ export default function CharacterCertificate({ student, certType }) {
                     width: '100%',
                     height: '100%',
                     objectFit: 'fill',   // must be 'fill' so overlay aligns exactly
-                    display: 'block', // set to display none
+                    display: 'none', // set to display none
                 }}
             />
             {/* <Field top={40} left={88} value={`${student.seatNumber}`} /> */}
 
 
-            <Field top={47.5} left={30} value={`${student.fullName}`} />
-            <Field top={51.2} left={20} value={`${student.fatherName}`} />
-            <Field top={51.2} left={43} value={`${student.surname}`} />
-            <Field top={60} left={18} value={`${student.grNumber}`} />
+            <Field top={48.3} left={21} value={`${student.fullName}`} />
+            <Field top={54} left={9} value={`${student.fatherName}`} />
+            <Field top={54} left={25} value={`${student.surname}`} />
+            <Field top={60.6} left={12} value={`${student.grNumber}`} />
 
-            <Field top={65} left={20} value={`${student.dateOfAdmission}`} />
-            <Field top={65} left={35} value="31-03-2026" />
+            <Field top={67} left={12} value={`${student.dateOfAdmission}`} />
+            <Field top={67} left={27} value="31-03-2026" />
 
-            <Field top={85} left={18} value="21-07-2026" />
+            <Field top={87} left={11} value="21-07-2026" />
 
 
         </div>
