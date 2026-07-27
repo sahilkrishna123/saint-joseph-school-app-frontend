@@ -19,7 +19,6 @@ export const CERT_REQUIRED_FIELDS = {
     ],
     leaving2: [
         { key: 'grNumber', label: 'GR Number' },
-        { key: 'seatNumber', label: 'Seat Number' },
         { key: 'fullName', label: 'Full Name' },
         { key: 'fatherName', label: 'Father Name' },
         { key: 'surname', label: 'Surname' },
@@ -27,9 +26,12 @@ export const CERT_REQUIRED_FIELDS = {
         { key: 'dateOfBirth', label: 'Date of Birth' },
         { key: 'lastSchoolAttended', label: 'Last School Attended' },
         { key: 'dateOfAdmission', label: 'Date of Admission' },
+        { key: 'dateOfLeaving', label: 'Date of Leaving' },
+        { key: 'classInWhichAdmitted', label: 'Class In Which Admitted' },
+        { key: 'reasonOfLeaving', label: 'Reason of Leaving' },
         { key: 'progessInStudies', label: 'Progress in Studies' },
         { key: 'conduct', label: 'Conduct' },
-        { key: 'dateOfLeaving', label: 'Date of Leaving' },
+        { key: 'remarks', label: 'Remarks' },
     ],
     provisional: [
         { key: 'grNumber', label: 'GR Number' },
